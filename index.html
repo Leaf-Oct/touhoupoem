@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>东方幽紫诗</title>
+		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+		<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+		<script type="text/javascript" src="./touhou.js"></script>
+		<link rel="stylesheet" href="./touhou.css">
+	</head>
+	<body onload="init()">
+		<!-- 交作业的时候要把这个BGM打开 -->
+		<audio src="./sound/桜舞う青空の下で.mp3" autoplay="autoplay" id="BGM" loop="loop" preload="auto"></audio>
+		<!-- 开始界面 -->
+		<!-- 搞定 -->
+		<div id="begin" class="game_frame" style="background-image: url('./res/贴贴 模糊.jpg');" >
+			<button type="button" class="btn btn-primary" style="display: block; position: absolute; left: 5%; top: 5%;" onclick="$('#BGM').remove();this.remove();">关音乐</button>
+			<img alt="title" src="./res/标题.png" style="position: relative; top: 10%; animation-duration: 1.5s" class="animate__bounceIn">
+			<div id="two_buttons">
+				<img alt="begin" src="./res/开始.png" style="float: left;margin: 100px" onmousemove="this.src='./res/开始_selected.png'"
+				 onmouseleave="this.src='./res/开始.png'" onclick="$('#begin').remove();$('#about').remove();$('#game').show();changeDialog();$('#BGM').attr('src','./sound/幽雅に咲かせ、墨染の桜.ogg')">
+				<!-- 再加一个功能，改BGM -->
+				<img alt="about" src="./res/关于.png" style="float: right;margin: 100px" onmousemove="this.src='./res/关于_selected.png'"
+				 onmouseleave="this.src='./res/关于.png'" onclick="$('#begin').hide();$('#about').show();">
+			</div>
+		</div>
+		<!-- 关于界面 -->
+		<!-- OK -->
+		<div id="about" class="game_frame" style="background-image: url('./res/贴贴 模糊.jpg');">
+			<button type="button" class="btn btn-primary" style="display: block; position: relative; left: 5%; top: 5%;" onclick="$('#begin').show();$('#about').hide();">返回</button>
+			<div style="margin-left: 10%; margin-right: 10%">
+				<h1>说明</h1>
+				<br> <span> <b>诚信声明 </b>该作品仅作为课程『多媒体技术及应用』期末大作业提交作品, 由本人独立自主完成,
+					仅使用了常见的web框架,未使用任何现成的游戏开发库. <br> <b>项目开源地址: <a href="https://github.com/leaf-oct/touhoupoem" target="_blank">github.com/leaf-oct/touhoupoem</a></b>
+					<br>
+					<br> 因为课堂上教的Flash已不再受主流浏览器支持，Authorware可参考资料过少，为了达到"多媒体" "交互" "多媒体网站"等作业需求，于是决定采用html+css+js的web方式完成此次作业，并部署到我的服务器上
+					<br> 交互方式十分简单, 点击对话框<b>只需像做单选题一般选择选项即可</b>. 选项会影响题目的走向, 以及决定最后结果.
+					该游戏共有6个结局. 可以从<a href="./answer.html" target="_blank">这里</a>查看攻略. <br>
+					<br> 感谢王志强老师指导，以及李俊杰老师传授web知识
+					<br> <br> 陆威威 2020152086 <br>
+					<br> 图像素材来源: 画师 <a href="https://twitter.com/You33ou/">鹅@twitter</a>,
+					东方绯想天, 东方求闻史纪
+					<br> 音频素材: <a href="https://music.163.com/#/song?id=27582639">ばんばんしー - 桜舞う青空の下で </a>
+					<a href="https://music.163.com/#/song?id=849691">TAMUSIC - 幽雅に咲かせ、墨染の桜 </a>
+					<a href="https://music.163.com/#/song?id=22765922">黄昏フロンティア / 上海アリス幻樂団 - 冷吟閑酔</a>
+					<br><br><br><br><br><br><br>一点碎碎念
+					<br> 内容上，本来考虑着要做个视觉小说(或者说galgame)的，但是无奈没谈过恋爱编不出剧情。
+					<br> 然后抬头就看到我书柜上的唐诗三百首和宋词三百首，突然脑洞一开，为什么不能把游戏和咱们的国粹联动起来呢。诗词也可以幽默风趣产乐子呀~然后文案和规划就有了
+					<br> 程序上，看到一个js库，专门用来做这种galgame的，叫avg.js。我读了一天的文档，发现它……demo代码没有，文档跟高中生写的似的，打包导出的时候就卡着。
+					<br> 什么玩意儿。我还不如自己从0开始造轮子，自己做个galgame框架。
+				</span>
+			</div>
+		</div>
+
+	<!-- 工程量最大的游戏界面 -->
+	<!-- 搞定~ -->
+	<div id="game" class="game_frame"
+		style="background-color: black; position: relative;">
+		<img src="./res/八云紫（萃梦想立绘）普.png" id="left_lihui" /> 
+		<img  id="right_lihui" />
+		<div class="btn-group-vertical" id="choice_frame">
+			<button type="button" class="btn btn-info btn-lg" id="IC" onclick="buttonInit(1)">山外青山楼外楼</button>
+			<button type="button" class="btn btn-info btn-lg" id="IIC" onclick="buttonInit(2)">行舟绿水前</button>
+			<button type="button" class="btn btn-info btn-lg" id="IIIC" onclick="buttonInit(3)">以而车来，以观沧海</button>
+			<button type="button" class="btn btn-info btn-lg" id="IVC" onclick="buttonInit(4)">华胥愁永柱</button>
+		</div>
+		<div class="jumbotron jumbotron-fluid " id="dialog"
+			onclick="changeDialog()">
+			<div class="container ">
+				<h2 class="display-4" id="char_name"></h2>
+				<p class="lead" id="char_content"></p>
+			</div>
+		</div>
+	</div>
+	<!-- 结束界面,完工~ -->
+	<div id="end" class="game_frame">
+	<!-- 楷体 KaiTi -->
+		<p id="fenghao" class="animate__fadeIn" style="font-size: 250px; font-family: 楷体, KaiTi; color: black; padding-top: 200px">寄</p>
+		<button type="button" class="btn btn-success" style=" position: absolute; left: 5%; top: 5%;" onclick="location.reload();">再玩一次</button>
+	</div>
+	<!-- 做完啦~开香槟咯🍾🍾🍾 -->
+	</body>
+</html>

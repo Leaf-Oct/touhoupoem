@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+body, div {
+	margin: 0;
+	padding: 0;
+}
+
+#dialog {
+	position: absolute;
+	left: 15px;
+	right: 15px;
+	border-radius: 10px;
+	opacity: 75%;
+	bottom: 0px;
+	cursor: pointer;
+}
+
+.game_frame {
+	/*游戏页面,还是喜欢720p的经典大小. 设置背景完全填充且只填充一次*/
+	height: 720px;
+	width: 1280px;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	border: 2px solid;
+	display: none;
+}
+
+#left_lihui {
+	/*靠父容器div左下角*/
+	height: 70%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding-left: 4%;
+	padding-bottom: 8%;
+}
+
+#right_lihui {
+	/*靠父容器div右下角*/
+	height: 70%;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	padding-left: 4%;
+	padding-bottom: 8%;
+	transform: rotateY(180deg);
+}
+
+#choice_frame {
+	right: 5%;
+	bottom: 40%;
+	position: absolute;
+	display: none;
+}
+
+#end {
+	background-image: url("./res/endingBG.jpg");
+	text-align: center;
+}
+
+#fenghao {
+	animation-duration: 3s;
+}
