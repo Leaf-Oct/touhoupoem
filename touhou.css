@@ -4,7 +4,7 @@ body, div {
 	margin: 0;
 	padding: 0;
 }
-
+/* 对话框的样式, 具有一定透明度,且鼠标移上去时会改变指针的样式 */
 #dialog {
 	position: absolute;
 	left: 15px;
@@ -26,7 +26,7 @@ body, div {
 }
 
 #left_lihui {
-	/*靠父容器div左下角*/
+	/*立绘靠父容器div左下角*/
 	height: 70%;
 	position: absolute;
 	left: 0;
@@ -36,7 +36,7 @@ body, div {
 }
 
 #right_lihui {
-	/*靠父容器div右下角*/
+	/*立绘靠父容器div右下角*/
 	height: 70%;
 	position: absolute;
 	right: 0;
@@ -45,19 +45,19 @@ body, div {
 	padding-bottom: 8%;
 	transform: rotateY(180deg);
 }
-
+/* 选项框的位置,一开始是隐藏的 */
 #choice_frame {
 	right: 5%;
 	bottom: 40%;
 	position: absolute;
 	display: none;
 }
-
+/* 结束,题字的时候,字要在中间. 背景是宣纸那张图 */
 #end {
 	background-image: url("./res/endingBG.jpg");
 	text-align: center;
 }
-
+/* 题的字, 3秒的时间来淡入 */
 #fenghao {
 	animation-duration: 3s;
 }

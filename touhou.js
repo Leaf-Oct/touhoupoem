@@ -5,10 +5,11 @@ function init() {
 window.storyLine = -1;
 //答题开始前的剧情. 任务名字和文案
 var names = ["八云 紫(やくも ゆかり)", "八云 紫", "八云 紫", "八云 紫", "", "幽幽子", "八云 紫", "幽幽子", "八云 紫", "八云 紫", "幽幽子", "八云 紫", "幽幽子", "八云 紫", "幽幽子"];
-var contents = ["我,八云紫, 是一个隙间妖怪. 我和西行寺幽幽子(さいぎょうじ　ゆゆこ)是有几百年交情的朋友了", "今天我像往常一样，到幽幽子的府上——白玉楼拜访", "走过庭院, 问候正在练剑的庭师魂魄妖梦, 然后直往书房走去", "见到她后, 我更加确定,  这个作品不只是简单的galgame.", "......", "啊啦, 紫", "在写诗吗？今天怎么有这雅致~", "诗可以兴，可以观，可以群，可以怨。有时还是需要借诗《怀古》的", "你若赋过明堂, 何必曾去叹那越中鹧鸪.", "你曾醉听萧鼓, 为何忧虑今宵酒醒何处?", "不愧是紫呢~诗词歌赋信手拈来", "毕竟一千多年前, 我也是去过大唐 大宋的", "陪我吟诗几句吧, 顺便展示下我练的书法", "乐意之至~", "客路青山外~"]
+var contents = ["我,八云紫, 是一个隙间妖怪. 我和西行寺幽幽子(さいぎょうじ　ゆゆこ)是有几百年交情的朋友了", "今天我像往常一样，到幽幽子的府上——白玉楼拜访", "走过庭院, 问候正在练剑的庭师魂魄妖梦, 然后直往书房走去", "见到她后, 我有预感,  这个作品不只是简单的galgame, 而是...会很麻烦", "......", "啊啦, 紫", "在写诗吗？今天怎么有这雅致~", "诗可以兴，可以观，可以群，可以怨。有时还是需要借诗《怀古》的", "你若赋过明堂, 何必曾去叹那越中鹧鸪.", "你曾醉听萧鼓, 为何忧虑今宵酒醒何处?", "不愧是紫呢~诗词歌赋信手拈来", "毕竟一千多年前, 我也是去过大唐 大宋的", "陪我吟诗几句吧, 顺便展示下我练的书法", "乐意之至~", "客路青山外~"]
 //答题开始前的剧情. 图片和文案的切换
 function changeDialog() {
 	storyLine++;
+	// 根据故事线变量切换背景和文案
 	switch (storyLine) {
 		case 2:
 			var bg = $("#game");
@@ -59,6 +60,7 @@ function changeDialog() {
 			var dia = $("#dialog");
 			dia.removeAttr("onclick");
 			dia.css("cursor", "default");
+			// 进入答题,切歌
 			$("#BGM").attr("src", "./sound/冷吟閑酔.mp3");
 			break;
 	}
@@ -73,7 +75,7 @@ window.rap = 0;
 window.head = 0;
 window.japan = 0;
 window.question_order = 0;
-//做出第一个选择后走的分支
+//做出第一个选择后走的分支,设置按钮功能
 function buttonInit(choose) {
 	$("#IC").html("");
 	$("#IIC").html("");
@@ -107,7 +109,7 @@ function buttonInit(choose) {
 			break;
 	}
 }
-//rap线,OK
+//rap线, 题目和选项,还有答案. 答案顺序是从0开始的
 var rap_content = [
 	"望长城内外",
 	"把酒问青天",
@@ -125,6 +127,7 @@ var rap_choices = [
 	["双双金鹧鸪", "天气晚来秋", "略输文采,忧从中来", "古国重游,漫江碧透"]
 ];
 var rap_answer = [3, 1, 0, 2, 3, 0, 3];
+// 判断选择的答案是否正确, 正确加分,否则不加分. 之后的判断方法同理
 function rapChange(choose) {
 	if (choose == rap_answer[question_order]) {
 		rap++;
@@ -191,6 +194,7 @@ var head_choices = [
 	["人约黄昏后", "山头斜照却相迎", "头白鸳鸯失伴飞", "唯有青山似洛中"],
 ];
 var head_answer = [1, 1, 2, 3, 0, 1, 2];
+// 这里要注意, 选了日语的选项要转到日语分支线
 function headChange(choose) {
 	if (choose == head_answer[question_order]) {
 		head++;
@@ -246,6 +250,7 @@ function jpChange(choose) {
 function finish() {
 	//换背景
 	$("#game").css("background-image", "url(./res/答题结束.jpg)");
+	// 换立绘和文字
 	$("#left_lihui").remove();
 	$("#right_lihui").attr("src", "./res/西行寺幽幽子（萃梦想立绘）嬉.png");
 	$("#char_content").html("还是有两下子嘛. 且待我给你题一副封号~");
@@ -253,25 +258,30 @@ function finish() {
 	$("#dialog").attr("onclick", "goEnding()");
 	$("#dialog").css("cursor", "pointer");
 }
-
+// 最后一个页面显示幽幽子题的字
 function goEnding() {
 	$("#game").remove();
 	$("#end").show();
 	//设置封号的字
 	var word = $("#fenghao");
 	if (score == 7) {
+		// 全对,太厉害了
 		word.html("当代诗仙");
 	}
 	else if (rap == 7) {
+		// 莫名押韵, 意思好像也说得通
 		word.html("诗词rapper");
 	}
 	else if (head == 7) {
+		// 跟成语接龙似的
 		word.html("接头霸王");
 	}
 	else if (japan == 5) {
+		// 大佬,您一定是读完了《小仓百人一首》吧
 		word.html("日语的神");
 	}
 	else if (score == 0 && rap == 0 && head == 0 && japan == 0) {
+		// 乱选至少都能对一个吧. 全错只能说是装糊涂的高手
 		word.html("马科长");
 	}
 	else {
