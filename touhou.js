@@ -54,7 +54,7 @@ function changeDialog() {
 			$("#left_lihui").attr("src", "./res/八云紫（萃梦想立绘）決.png");
 			break;
 		case 14:
-			$("#game").css("background-image", "url(./res/书房.png)");
+			$("#game").css("background-image", "url(./res/书房.jpg)");
 			$("#left_lihui").attr("src", "./res/西行寺幽幽子（萃梦想立绘）決.png");
 			$("#choice_frame").show();
 			var dia = $("#dialog");
